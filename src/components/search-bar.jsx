@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 
+
 class Searchbar extends Component {
 
   handleUpdate = (event) => {
-    console.log(event.target.value);
+    this.props.searchFunction(event.target.value);
   }
 
   render () {

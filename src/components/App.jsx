@@ -36,15 +36,17 @@ class App extends Component {
       gifs: [],
       selectedGifId: "kFCgYTogamVZiOIOYQ"
     }
-
-    this.search("homer thinking");
   }
 
   search = async (query) => {
-    //giphy API call
+    //giphyJSfetch API call
     const gf = new GiphyFetch('nT31BoMYeWTGDOfQRTX0jtFyQc1CV175')
-    const  { data: gifs } = await gf.search(`${query}`, { sort: 'relevant', lang: 'eng', limit: 10, type: 'stickers' })
-    console.log({ data: gifs })
+    const results = await gf.search(`${query}`,
+    { sort: 'relevant', lang: 'eng', limit: 10, type: 'stickers' })
+    console.log(results.data)
+    this.setState({
+      gifs: results.data
+    })
     }
 
   render() {
@@ -56,7 +58,8 @@ class App extends Component {
     return(
       <div>
         <div className="left-scene">
-          <Searchbar />
+        {/* the App will pass to its child Searchbar a props named "searchFunction" which contains the search function defined line 41 */}
+          <Searchbar searchFunction={this.search}/>
           <div className="selected-gif">
           <Gif id ={this.state.selectedGifId}/>
           </div>
